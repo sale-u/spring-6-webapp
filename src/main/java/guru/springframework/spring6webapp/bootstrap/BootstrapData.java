@@ -47,12 +47,6 @@ public class BootstrapData implements CommandLineRunner {
         Author rodSaved = authorRepository.save(rod);
         Book noEJBSaved = bookRepository.save(noEJB);
 
-        ericSaved.getBooks().add(dddSaved);      // pravimo relaciju izmedju autora eric i knjige ddd
-        rodSaved.getBooks().add(noEJBSaved);
-
-        authorRepository.save(ericSaved);
-        authorRepository.save(rodSaved);
-
         // Assignment - new Publisher
         Publisher publisher1 = new Publisher();
         publisher1.setPublisherName("BIGZ");
@@ -60,7 +54,18 @@ public class BootstrapData implements CommandLineRunner {
         publisher1.setState("Serbia");
         publisher1.setCity("Belgrade");
         publisher1.setZipCode("11000");
-        publisherRepository.save(publisher1);
+        Publisher publisher1Saved = publisherRepository.save(publisher1);
+
+        ericSaved.getBooks().add(dddSaved);      // pravimo relaciju izmedju autora eric i knjige ddd
+        rodSaved.getBooks().add(noEJBSaved);       // pravimo relaciju izmedju autora rod i knjige noEJB
+
+        dddSaved.setPublisher(publisher1Saved); // pravimo relaciju izmedju knjige ddd i izdavaca publisher1
+        noEJBSaved.setPublisher(publisher1Saved); // pravimo relaciju izmedju knjige noEJB i izdavaca publisher1
+
+        authorRepository.save(ericSaved);
+        authorRepository.save(rodSaved);
+        bookRepository.save(dddSaved);
+        bookRepository.save(noEJBSaved);
 
         System.out.println("In Bootstrap");
         System.out.println("Author count: " + authorRepository.count() + " authors");
