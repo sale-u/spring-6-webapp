@@ -58,6 +58,8 @@ public class BootstrapData implements CommandLineRunner {
 
         ericSaved.getBooks().add(dddSaved);      // pravimo relaciju izmedju autora eric i knjige ddd
         rodSaved.getBooks().add(noEJBSaved);       // pravimo relaciju izmedju autora rod i knjige noEJB
+        dddSaved.getAuthors().add(ericSaved);       // moramo upisati i obrnutu relaciju
+        noEJBSaved.getAuthors().add(rodSaved);      // kako bi join tabela "author_book" bila ispravno popunjena
 
         dddSaved.setPublisher(publisher1Saved); // pravimo relaciju izmedju knjige ddd i izdavaca publisher1
         noEJBSaved.setPublisher(publisher1Saved); // pravimo relaciju izmedju knjige noEJB i izdavaca publisher1
