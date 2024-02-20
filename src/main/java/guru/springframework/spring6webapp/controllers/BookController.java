@@ -17,7 +17,7 @@ public class BookController {
     @RequestMapping("/books")
     public String getBooks(Model model) {
         model.addAttribute("books", bookService.findAll());
-        return "books";     // we need to create books.html
+        return "books.html";     // we need to create books.html
     }
 
 }

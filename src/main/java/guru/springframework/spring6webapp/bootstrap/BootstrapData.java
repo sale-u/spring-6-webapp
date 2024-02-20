@@ -56,16 +56,19 @@ public class BootstrapData implements CommandLineRunner {
         publisher1.setZipCode("11000");
         Publisher publisher1Saved = publisherRepository.save(publisher1);
 
-        ericSaved.getBooks().add(dddSaved);      // pravimo relaciju izmedju autora eric i knjige ddd
-        rodSaved.getBooks().add(noEJBSaved);       // pravimo relaciju izmedju autora rod i knjige noEJB
-        dddSaved.getAuthors().add(ericSaved);       // moramo upisati i obrnutu relaciju
-        noEJBSaved.getAuthors().add(rodSaved);      // kako bi join tabela "author_book" bila ispravno popunjena
+//        ericSaved.getBooks().add(dddSaved);      // pravimo relaciju izmedju autora eric i knjige ddd
+//        rodSaved.getBooks().add(noEJBSaved);       // pravimo relaciju izmedju autora rod i knjige noEJB
+        // U relaciji Author : Book, entitet Book je primarni a Author je mappedBy entitet
+        // Stoga je dovoljno uspostaviti relaciju u Book instancama dddSaved i noEJBSaved
+        // i potom sacuvati samo izmene nastale na Book entitetima dddSaved i noEJBSaved
+        dddSaved.getAuthors().add(ericSaved);
+        noEJBSaved.getAuthors().add(rodSaved);
 
         dddSaved.setPublisher(publisher1Saved); // pravimo relaciju izmedju knjige ddd i izdavaca publisher1
         noEJBSaved.setPublisher(publisher1Saved); // pravimo relaciju izmedju knjige noEJB i izdavaca publisher1
 
-        authorRepository.save(ericSaved);
-        authorRepository.save(rodSaved);
+//        authorRepository.save(ericSaved); // nepotrebno jer nismo uradili nikakvu izmenu na Author instancama
+//        authorRepository.save(rodSaved);  // nepotrebno jer nismo uradili nikakvu izmenu na Author instancama
         bookRepository.save(dddSaved);
         bookRepository.save(noEJBSaved);
 
